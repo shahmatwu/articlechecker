@@ -1,0 +1,8 @@
+byte
+ZERO_BYTE
+b
+VARBLOCK_VERSION
+write_varint
+yield_fixedblocks
+read_varint
+yield_varblocks

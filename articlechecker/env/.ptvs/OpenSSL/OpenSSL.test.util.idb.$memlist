@@ -1,0 +1,17 @@
+mktemp
+NON_ASCII
+PY3
+memdbg
+b
+os
+exception_from_error_queue
+shutil
+lib
+Error
+sys
+traceback
+WARNING_TYPE_EXPECTED
+EqualityTestsMixin
+ffi
+TestCase
+_memdbg

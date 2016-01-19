@@ -1,0 +1,15 @@
+sameopenfile
+commonprefix
+os
+__all__
+getmtime
+getctime
+getsize
+_splitext
+stat
+isdir
+samefile
+getatime
+samestat
+isfile
+exists

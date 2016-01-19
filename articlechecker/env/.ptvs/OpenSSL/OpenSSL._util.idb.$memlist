@@ -1,0 +1,17 @@
+sys
+native
+warn
+PY3
+Binding
+ffi
+binding
+lib
+_TEXT_WARNING
+binary_type
+text_type
+text_to_bytes_and_warn
+exception_from_error_queue
+path_string
+text
+UNSPECIFIED
+byte_string
