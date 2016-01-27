@@ -5990,3 +5990,102 @@ C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\Extensions\Micro
 2016-01-12T15:38:06: Saving group "D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\_markerlib"
 2016-01-12T15:38:06: End of group "D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\_markerlib"
 2016-01-12T15:38:06: Deleting 0 files
+
+2016-01-26T13:30:57: Start analysis
+2016-01-26T13:30:57: [WARNING] Library was set explicitly - skipping path detection
+2016-01-26T13:30:57: IncludeModulesFromModulePath = win32com
+2016-01-26T13:30:58: Deleting 0 files
+2016-01-26T13:30:58: astropy.CallDepth = 0
+2016-01-26T13:30:58: matplotlib.CallDepth = 3
+2016-01-26T13:30:58: pandas.CallDepth = 0
+2016-01-26T13:30:58: sympy.CallDepth = 0
+2016-01-26T13:30:58: Start group "D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3" with 28 files
+2016-01-26T13:30:58: Parsing "urllib3.connection" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\connection.py")
+2016-01-26T13:30:58: Parsing "urllib3.connectionpool" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\connectionpool.py")
+2016-01-26T13:30:58: Parsing "urllib3.exceptions" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\exceptions.py")
+2016-01-26T13:30:58: Parsing "urllib3.fields" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\fields.py")
+2016-01-26T13:30:58: Parsing "urllib3.filepost" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\filepost.py")
+2016-01-26T13:30:58: Parsing "urllib3.poolmanager" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\poolmanager.py")
+2016-01-26T13:30:58: Parsing "urllib3.request" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\request.py")
+2016-01-26T13:30:58: Parsing "urllib3.response" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\response.py")
+2016-01-26T13:30:58: Parsing "urllib3._collections" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\_collections.py")
+2016-01-26T13:30:58: Parsing "urllib3" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\__init__.py")
+2016-01-26T13:30:58: Parsing "urllib3.contrib.appengine" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\contrib\appengine.py")
+2016-01-26T13:30:58: Parsing "urllib3.contrib.ntlmpool" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\contrib\ntlmpool.py")
+2016-01-26T13:30:58: Parsing "urllib3.contrib.pyopenssl" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\contrib\pyopenssl.py")
+2016-01-26T13:30:58: Parsing "urllib3.contrib.socks" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\contrib\socks.py")
+2016-01-26T13:30:58: Parsing "urllib3.contrib" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\contrib\__init__.py")
+2016-01-26T13:30:58: Parsing "urllib3.packages.ordered_dict" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\packages\ordered_dict.py")
+2016-01-26T13:30:58: Parsing "urllib3.packages.six" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\packages\six.py")
+2016-01-26T13:30:58: Parsing "urllib3.packages" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\packages\__init__.py")
+2016-01-26T13:30:58: Parsing "urllib3.packages.ssl_match_hostname._implementation" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\packages\ssl_match_hostname\_implementation.py")
+2016-01-26T13:30:58: Parsing "urllib3.packages.ssl_match_hostname" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\packages\ssl_match_hostname\__init__.py")
+2016-01-26T13:30:58: Parsing "urllib3.util.connection" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\util\connection.py")
+2016-01-26T13:30:58: Parsing "urllib3.util.request" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\util\request.py")
+2016-01-26T13:30:58: Parsing "urllib3.util.response" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\util\response.py")
+2016-01-26T13:30:58: Parsing "urllib3.util.retry" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\util\retry.py")
+2016-01-26T13:30:58: Parsing "urllib3.util.ssl_" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\util\ssl_.py")
+2016-01-26T13:30:58: Parsing "urllib3.util.timeout" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\util\timeout.py")
+2016-01-26T13:30:58: Parsing "urllib3.util.url" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\util\url.py")
+2016-01-26T13:30:58: Parsing "urllib3.util" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3\util\__init__.py")
+2016-01-26T13:30:58: Parsing complete
+2016-01-26T13:30:58: Analyzing "urllib3.connection"
+2016-01-26T13:30:58: Analyzing "urllib3.connectionpool"
+2016-01-26T13:30:58: Analyzing "urllib3.exceptions"
+2016-01-26T13:30:58: Analyzing "urllib3.fields"
+2016-01-26T13:30:58: Analyzing "urllib3.filepost"
+2016-01-26T13:30:58: Analyzing "urllib3.poolmanager"
+2016-01-26T13:30:58: Analyzing "urllib3.request"
+2016-01-26T13:30:58: Analyzing "urllib3.response"
+2016-01-26T13:30:58: Analyzing "urllib3._collections"
+2016-01-26T13:30:58: Analyzing "urllib3"
+2016-01-26T13:30:58: Analyzing "urllib3.contrib.appengine"
+2016-01-26T13:30:58: Analyzing "urllib3.contrib.ntlmpool"
+2016-01-26T13:30:58: Analyzing "urllib3.contrib.pyopenssl"
+2016-01-26T13:30:58: Analyzing "urllib3.contrib.socks"
+2016-01-26T13:30:58: Analyzing "urllib3.contrib"
+2016-01-26T13:30:58: Analyzing "urllib3.packages.ordered_dict"
+2016-01-26T13:30:58: Analyzing "urllib3.packages.six"
+2016-01-26T13:30:58: Analyzing "urllib3.packages"
+2016-01-26T13:30:58: Analyzing "urllib3.packages.ssl_match_hostname._implementation"
+2016-01-26T13:30:58: Analyzing "urllib3.packages.ssl_match_hostname"
+2016-01-26T13:30:58: Analyzing "urllib3.util.connection"
+2016-01-26T13:30:58: Analyzing "urllib3.util.request"
+2016-01-26T13:30:58: Analyzing "urllib3.util.response"
+2016-01-26T13:30:58: Analyzing "urllib3.util.retry"
+2016-01-26T13:30:58: Analyzing "urllib3.util.ssl_"
+2016-01-26T13:30:58: Analyzing "urllib3.util.timeout"
+2016-01-26T13:30:58: Analyzing "urllib3.util.url"
+2016-01-26T13:30:58: Analyzing "urllib3.util"
+2016-01-26T13:30:58: Starting analysis of 28 modules
+2016-01-26T13:31:00: Analysis complete
+2016-01-26T13:31:00: Saving group "D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3"
+2016-01-26T13:31:00: End of group "D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\urllib3"
+2016-01-26T13:31:01: Deleting 0 files
+
+2016-01-26T13:38:24: Start analysis
+2016-01-26T13:38:24: [WARNING] Library was set explicitly - skipping path detection
+2016-01-26T13:38:24: IncludeModulesFromModulePath = win32com
+2016-01-26T13:38:24: Deleting 0 files
+2016-01-26T13:38:24: astropy.CallDepth = 0
+2016-01-26T13:38:24: matplotlib.CallDepth = 3
+2016-01-26T13:38:24: pandas.CallDepth = 0
+2016-01-26T13:38:24: sympy.CallDepth = 0
+2016-01-26T13:38:24: Start group "D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\certifi" with 3 files
+2016-01-26T13:38:24: Parsing "certifi.core" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\certifi\core.py")
+2016-01-26T13:38:24: Parsing "certifi" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\certifi\__init__.py")
+2016-01-26T13:38:24: Parsing "certifi.__main__" ("D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\certifi\__main__.py")
+2016-01-26T13:38:24: Parsing complete
+2016-01-26T13:38:24: Analyzing "certifi.core"
+2016-01-26T13:38:24: Analyzing "certifi"
+2016-01-26T13:38:24: Analyzing "certifi.__main__"
+2016-01-26T13:38:24: Starting analysis of 3 modules
+2016-01-26T13:38:26: Analysis complete
+2016-01-26T13:38:26: Saving group "D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\certifi"
+2016-01-26T13:38:26: End of group "D:\Users\Stephen\Visual Studio 2013\Projects\apppicker\articlechecker\articlechecker\env\Lib\site-packages\certifi"
+2016-01-26T13:38:26: Deleting 0 files
+
+2016-01-26T14:53:40: Start analysis
+2016-01-26T14:53:40: [WARNING] Library was set explicitly - skipping path detection
+2016-01-26T14:53:40: IncludeModulesFromModulePath = win32com
+2016-01-26T14:53:40: Deleting 0 files

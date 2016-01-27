@@ -6,11 +6,12 @@ import pageanalytics
 import csv
 import json
 from datetime import datetime
+import time
 
 inputcsv = 'D:\\projects\\AppPicker\\reports\\best of lists performance\\ap_article.csv'
 outputcsv = 'D:\\projects\\AppPicker\\reports\\best of lists performance\\article_visits_up.csv'
-start_date_str = '2015-12-01'
-end_date_str = '2015-12-31'
+start_date_str = '2016-01-01'
+end_date_str = '2016-01-22'
 
 class ArticleTypeException(Exception):
     def __init__(self, customMessage = 'Unknown article type was specified'):
@@ -56,7 +57,8 @@ class google():
                                         delimiter=',', 
                                         quotechar='"')
                 i = 1
-                next(reader) # skip header row
+                for i in range(1):
+                    next(reader) # skip header row
                 for row in reader:
                     if i % 10 == 0: print('Record: {}'.format(i))
 
@@ -68,10 +70,16 @@ class google():
                     published_at = row['published_at']
 
                     # get Google Analytics results for period between start and end dates
-                    garesults = broker.get_results(pagePath=str(article_url).replace('http://www.apppicker.com',''), 
-                                                   start_date=start_date_str, end_date=end_date_str,
-                                                   metrics='ga:sessions,ga:pageviews,ga:users,ga:newUsers,ga:bounces,ga:avgTimeOnPage,ga:sessionsPerUser,ga:avgPageLoadTime,ga:avgSessionDuration,ga:bounceRate')
-                
+                    try:
+                        garesults = broker.get_results(pagePath=str(article_url).replace('http://www.apppicker.com',''), 
+                                                       start_date=start_date_str, end_date=end_date_str,
+                                                       metrics='ga:sessions,ga:pageviews,ga:users,ga:newUsers,ga:bounces,ga:avgTimeOnPage,ga:sessionsPerUser,ga:avgPageLoadTime,ga:avgSessionDuration,ga:bounceRate')
+                    except googleapiclient.errors.HttpError as e:
+                        time.sleep(5)
+                        garesults = broker.get_results(pagePath=str(article_url).replace('http://www.apppicker.com',''), 
+                                                       start_date=start_date_str, end_date=end_date_str,
+                                                       metrics='ga:sessions,ga:pageviews,ga:users,ga:newUsers,ga:bounces,ga:avgTimeOnPage,ga:sessionsPerUser,ga:avgPageLoadTime,ga:avgSessionDuration,ga:bounceRate')
+
                     metrics = google.extract_metrics(garesults)
     #                print('{}'.format(json.dumps(row)))
 

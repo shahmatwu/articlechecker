@@ -1,18 +1,23 @@
-""" Scrape list of applists and create report CVS listing all apps found on the site for each applist.
-    This can then be used to check the associated apps stored in our DB """
+""" Scrape list of applists and create report CSV listing all apps found on the site for each applist.
+    This can then be used to check the associated apps stored in our DB.
+    
+    The input CSV is expected to have columns 'article_id', 'article_type', 'published_at', 'slug'.
+    The scraper reports are expected to have columns 'article_id', 'article_url', 'published_at', 'app_id', 'itunes_link'.
+   
+    In the future, we can create additional scrapers for the other article types, in which case common
+    logic will be factored out of this to be shared by all scraper modules (or this module generalised
+    to handle other article types). """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import urllib.request
 from articleUrls import articleUrls
 import csv
 import json
 from datetime import datetime
-import urllib.request
 from bs4 import BeautifulSoup
 import re
 import time
-
-outputcsv = 'D:\\projects\\AppPicker\\reports\\best of lists performance\\applist_scraper_report.csv'
 
 class ApplistLoadError(Exception):
     def __init__(self, customMessage = 'Could not open specified applist URL'):
@@ -87,14 +92,19 @@ def getappsfromlist(applist_url):
         appIds.append((getappIDfromiTunesLink(ituneslink),ituneslink))
     return appIds
 
-def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\ap_article.csv', hasheader=True):
+def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\ap_article.csv', hasheader=True,
+         outputcsv = 'D:\\projects\\AppPicker\\reports\\best of lists performance\\applist_scraper_report.csv'):
+
+    APP_LIST_IDX_app_id = 0
+    APP_LIST_IDX_itunes_link = 1
+
     # open output file
     with open(outputcsv, 'w', newline='', encoding='utf-8') as outfileh:
         writer = csv.writer(outfileh, delimiter=',', quotechar='"', escapechar='~', doublequote=False, quoting=csv.QUOTE_NONNUMERIC)
 
         # write out headings
         # these headings depend on the metrics requested in call to broker.get_results, and match values to writer.writerow at end of this loop
-        writer.writerow(['article_id', 'article_url', 'app_id', 'itunes_link'])
+        writer.writerow(['article_id', 'article_url', 'published_at', 'app_id', 'itunes_link'])
 
         # open input file
         with open(inputcsv, newline='\n', encoding='utf-8') as inputfileh:
@@ -112,6 +122,7 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                 slug = row['slug']
                 article_url = articleUrls(article_type, article_id, slug)
                 print(str(article_url))
+                published_at = row['published_at']
 
                 # scrape the apps on this article
                 #writer.writerow([article_id, article_url, 'APPS'])
@@ -120,7 +131,7 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                 except urllib.error.HTTPError:
                     apps = getappsfromlist(str(article_url)) # try again
                 for app in apps:
-                    writer.writerow([article_id, article_url, app[0], app[1]])
+                    writer.writerow([article_id, article_url, published_at, app[APP_LIST_IDX_app_id], app[APP_LIST_IDX_itunes_link]])
                 i += 1
                 #if i==50:break
         inputfileh.close()
