@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+class ArticleTypeException(Exception):
+    def __init__(self, customMessage = 'Unknown article type was specified'):
+        self.customMessage = customMessage
+    def __str__(self):
+        return repr(self.customMessage)
+
 class articleUrls():
     """ construct appPicker URL for an article given its ID and slug """
     def __init__(self, article_type:int, article_id:int, slug:str):

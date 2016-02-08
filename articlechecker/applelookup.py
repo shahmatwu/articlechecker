@@ -68,9 +68,10 @@ def extractappfields(appjson:json):
     return result
 
 def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\applist_scraper_report.csv',
+         inputcsvhasheaders=True,
          outputcsv = 'D:\\projects\\AppPicker\\reports\\best of lists performance\\applelookup_report.csv'):
     # open output file
-    with open(outputcsv, 'w', newline='', encoding='utf-8') as outfileh:
+    with open(outputcsv, 'w', newline='', encoding='utf-8', errors='replace') as outfileh:
         writer = csv.writer(outfileh, delimiter=',', quotechar='"', escapechar='~', doublequote=False, quoting=csv.QUOTE_NONNUMERIC)
 
         # write out headings
@@ -79,7 +80,7 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                          'price', 'primary_genre', 'version', 'release_date', 'rating', 'ratings', 'curr_rating', 'curr_ratings'])
 
         # open input file
-        with open(inputcsv, newline='\n', encoding='utf-8') as inputfileh:
+        with open(inputcsv, newline='\n', encoding='utf-8', errors='replace') as inputfileh:
             reader = csv.DictReader(inputfileh, 
                                     fieldnames=('article_id', 'article_url', 'published_at', 'app_id', 'itunes_link'),
                                     delimiter=',', 
@@ -88,9 +89,9 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
             position_in_art = 0 # position an app occupies in an article (more relevant to lists; in a review, it will just be position 1)
             curr_article_id = 0
 
-            next(reader) # skip header row
+            if inputcsvhasheaders: next(reader) # skip header row
             for row in reader:
-                if input_rec_no % 10 == 0: print('Record: {}'.format(input_rec_no))
+                #if input_rec_no % 10 == 0: print('Record: {}'.format(input_rec_no))
 
                 # get input fields
                 article_id = row['article_id']
@@ -105,11 +106,15 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                 else:
                     position_in_art = 1
                     curr_article_id = article_id
+                    print('{}'.format(article_url))
+
                 # 2. values from Apples Search/Lookup API
 
                 if app_id and app_id.isdigit():
                     appjson = callapple(app_id)
                     flds = extractappfields(appjson)
+
+                    print(('   {}...'.format(flds['title'][:50])).encode('ascii', 'ignore').decode('utf-8')) # avoids errors when unusual characters are printed to the console
 
                     # strip new lines and commas from description and shorten to 200 chars
                     desc_extract = flds['description'].replace('\n',' ').replace('\r', ' ').replace(',', ' ')[:200]

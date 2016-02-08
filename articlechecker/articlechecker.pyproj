@@ -39,6 +39,9 @@
     <Compile Include="pageanalytics.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="console.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">

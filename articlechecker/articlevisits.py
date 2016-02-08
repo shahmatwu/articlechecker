@@ -8,17 +8,6 @@ import json
 from datetime import datetime
 import time
 
-inputcsv = 'D:\\projects\\AppPicker\\reports\\best of lists performance\\ap_article.csv'
-outputcsv = 'D:\\projects\\AppPicker\\reports\\best of lists performance\\article_visits_up.csv'
-start_date_str = '2016-01-01'
-end_date_str = '2016-01-22'
-
-class ArticleTypeException(Exception):
-    def __init__(self, customMessage = 'Unknown article type was specified'):
-        self.customMessage = customMessage
-    def __str__(self):
-        return repr(self.customMessage)
-
 def datetime_str_to_object(dt_string:str):
     return datetime.strptime(dt_string, '%d/%m/%Y %H:%M')
 
@@ -38,7 +27,10 @@ class google():
                     metrics[j['name']] = i[idx]
         return metrics
 
-    def main():
+    def main(inputcsv = 'D:\\projects\\AppPicker\\reports\\best of lists performance\\ap_article.csv',
+             outputcsv = 'D:\\projects\\AppPicker\\reports\\best of lists performance\\article_visits_up.csv',
+             start_date_str = '2016-01-01',
+             end_date_str = '2016-01-31'):
         broker = pageanalytics.Broker()
 
         # open output file

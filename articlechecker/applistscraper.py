@@ -18,6 +18,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 import re
 import time
+import http
 
 class ApplistLoadError(Exception):
     def __init__(self, customMessage = 'Could not open specified applist URL'):
@@ -44,12 +45,11 @@ def getappIDfromiTunesLink(itunes_url):
 
     return app_id
 
-def getappsfromlist(applist_url):
-    """ Parse given applist and extract the app IDs thereon
-        Returns list of tuples each containing app_id and iTunes link """
+def openurlforsoup(applist_url):
+    """ Open the given url and return loaded BeautifulSoup and 'real' url (e.g. after a redirection from the given url) """
+    applist_url = str(applist_url)
     soup = None
-    appIds = []
-
+    
     try:
         c = urllib.request.urlopen(applist_url)
     except http.client.IncompleteRead as e:
@@ -61,6 +61,13 @@ def getappsfromlist(applist_url):
         raise ApplistLoadError('Could not open ' + applist_url)
     
     soup = BeautifulSoup(c.read(), 'html.parser')
+
+    return c.url, soup
+
+def getappsfromlist(soup:BeautifulSoup):
+    """ Parse given applist and extract the app IDs thereon
+        Returns list of tuples each containing app_id and iTunes link """
+    appIds = []
 
     # build up list of itunes links in the article
     # check new style of applist
@@ -127,14 +134,49 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                 # scrape the apps on this article
                 #writer.writerow([article_id, article_url, 'APPS'])
                 try:
-                    apps = getappsfromlist(str(article_url))
+                    article_url, soup = openurlforsoup(str(article_url))
                 except urllib.error.HTTPError:
-                    apps = getappsfromlist(str(article_url)) # try again
+                    article_url, soup = openurlforsoup(str(article_url)) # try again
+                
+                apps = getappsfromlist(soup)
                 for app in apps:
                     writer.writerow([article_id, article_url, published_at, app[APP_LIST_IDX_app_id], app[APP_LIST_IDX_itunes_link]])
+
                 i += 1
                 #if i==50:break
         inputfileh.close()
     outfileh.close()
 
+    return None
+
+def single(article_id, outputcsv):
+    """produce scraper report of apps on a single applist given the article id -
+    some output values are dummied because they are usually obtained from the input file (in main)"""
+    APP_LIST_IDX_app_id = 0
+    APP_LIST_IDX_itunes_link = 1
+    ARTICLE_TYPE = 2
+
+    # open output file
+    with open(outputcsv, 'w', newline='', encoding='utf-8') as outfileh:
+        writer = csv.writer(outfileh, delimiter=',', quotechar='"', escapechar='~', doublequote=False, quoting=csv.QUOTE_NONNUMERIC)
+
+        # write out headings
+        # these headings depend on the metrics requested in call to broker.get_results, and match values to writer.writerow at end of this loop
+        writer.writerow(['article_id', 'article_url', 'published_at', 'app_id', 'itunes_link'])
+
+        # work out applist url based on article ID
+        article_url = articleUrls(ARTICLE_TYPE, article_id, 'dont-know-slug')
+        try:
+            article_url, soup = openurlforsoup(article_url)
+        except urllib.error.HTTPError:
+            article_url, soup = openurlforsoup(article_url) # try again
+
+        published_at = '????'
+        apps = getappsfromlist(soup)
+
+        for app in apps:
+            writer.writerow([article_id, article_url, published_at, app[APP_LIST_IDX_app_id], app[APP_LIST_IDX_itunes_link]])
+
+        print(str(article_url))
+        
     return None
