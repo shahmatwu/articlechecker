@@ -80,7 +80,7 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                          'price', 'primary_genre', 'version', 'release_date', 'rating', 'ratings', 'curr_rating', 'curr_ratings'])
 
         # open input file
-        with open(inputcsv, newline='\n', encoding='utf-8', errors='replace') as inputfileh:
+        with open(inputcsv, mode='rU', newline='\n', encoding='utf-8', errors='replace') as inputfileh:
             reader = csv.DictReader(inputfileh, 
                                     fieldnames=('article_id', 'article_url', 'published_at', 'app_id', 'itunes_link'),
                                     delimiter=',', 

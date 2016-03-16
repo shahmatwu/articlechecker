@@ -1,8 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import urllib.request
+import http
 
 class ArticleTypeException(Exception):
     def __init__(self, customMessage = 'Unknown article type was specified'):
+        self.customMessage = customMessage
+    def __str__(self):
+        return repr(self.customMessage)
+
+class ArticleLoadError(Exception):
+    def __init__(self, customMessage = 'Could not open specified article URL'):
         self.customMessage = customMessage
     def __str__(self):
         return repr(self.customMessage)
@@ -32,4 +40,17 @@ class articleUrls():
     def __eq__(self, y):
         return self.value==y.value
 
+    def realurl(self):
+        """ Open a dummy url based on routing pattern and return 'real' url (e.g. after a redirection from the given url) """
 
+        try:
+            c = urllib.request.urlopen(str(self))
+        except http.client.IncompleteRead as e:
+            c = e.partial
+        except urllib.error.HTTPError as e:
+            time.sleep(5)
+            raise e
+        except:
+            raise ArticleLoadError('Could not open ' + str(self))
+    
+        return c.url

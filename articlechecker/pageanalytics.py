@@ -4,6 +4,8 @@
 from googleapiclient.discovery import build
 import httplib2
 from oauth2client.client import SignedJwtAssertionCredentials
+import os
+import sys
 
 class Broker(object):
     """ Broker object to Google Analytics API """
@@ -14,7 +16,7 @@ class Broker(object):
         # Define the auth scopes to request.
         scope = ['https://www.googleapis.com/auth/analytics.readonly']
         service_account_email = 'apppicker@coastal-sanctum-114912.iam.gserviceaccount.com'
-        key_file_location = 'Stephen First Project-b3fef0b50ccf.p12'
+        key_file_location = os.path.dirname(os.path.realpath(__file__)) + '\\Stephen First Project-b3fef0b50ccf.p12'
 
         # Authenticate and construct service.
 
@@ -86,14 +88,19 @@ class Broker(object):
         service = self._service
         profile_id = self._profile
 
-        return service.data().ga().get(
-            ids='ga:' + profile_id,
-            start_date=start_date,
-            end_date=end_date,
-            metrics=metrics,
-            #dimensions=dimensions,
-            #sort='-ga:sessions',
-            filters=pagePath).execute()
+        try:
+            answer = service.data().ga().get(
+                ids='ga:' + profile_id,
+                start_date=start_date,
+                end_date=end_date,
+                metrics=metrics,
+                #dimensions=dimensions,
+                #sort='-ga:sessions',
+                filters=pagePath).execute()
+            return answer
+        except:
+            print("get_results error: ",sys.exc_info())
+            raise
 
     def extract_pageviews(self, results):
         """ Simple helper to get pageviews data from total results """

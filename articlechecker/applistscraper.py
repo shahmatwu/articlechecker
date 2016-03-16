@@ -71,7 +71,7 @@ def getappsfromlist(soup:BeautifulSoup):
 
     # build up list of itunes links in the article
     # check new style of applist
-    newlist = soup.findAll('div', class_='app-block-landscape ')
+    newlist = soup.findAll('div', class_='app-block-landscape-app')
     if newlist:
         try:
             itunes_links = [app.find('div', class_='button-application-wrapper').a['href'] for app in newlist]
@@ -108,7 +108,6 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
     # open output file
     with open(outputcsv, 'w', newline='', encoding='utf-8') as outfileh:
         writer = csv.writer(outfileh, delimiter=',', quotechar='"', escapechar='~', doublequote=False, quoting=csv.QUOTE_NONNUMERIC)
-
         # write out headings
         # these headings depend on the metrics requested in call to broker.get_results, and match values to writer.writerow at end of this loop
         writer.writerow(['article_id', 'article_url', 'published_at', 'app_id', 'itunes_link'])
@@ -136,7 +135,14 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                 try:
                     article_url, soup = openurlforsoup(str(article_url))
                 except urllib.error.HTTPError:
-                    article_url, soup = openurlforsoup(str(article_url)) # try again
+                    try:
+                        article_url, soup = openurlforsoup(article_url) # try again
+                    except urllib.error.HTTPError as e:
+                        print("HTTP error opening article_id {}: {}".format(article_id, e.reason))
+                        raise
+                    except e:
+                        print("General error opening article id {}: {}".format(article_id, e.reason))
+                        raise
                 
                 apps = getappsfromlist(soup)
                 for app in apps:
@@ -169,7 +175,14 @@ def single(article_id, outputcsv):
         try:
             article_url, soup = openurlforsoup(article_url)
         except urllib.error.HTTPError:
-            article_url, soup = openurlforsoup(article_url) # try again
+            try:
+                article_url, soup = openurlforsoup(article_url) # try again
+            except urllib.error.HTTPError as e:
+                print("HTTP error opening article_id {}: {}".format(article_id, e.reason))
+                raise
+            except e:
+                print("General error opening article id {}: {}".format(article_id, e.reason))
+                raise
 
         published_at = '????'
         apps = getappsfromlist(soup)

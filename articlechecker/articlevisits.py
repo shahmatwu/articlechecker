@@ -15,8 +15,6 @@ def roundtonearestdate(dt:datetime):
     newdt = datetime.date(dt + timedelta(hours=12))
     return newdt
 
-
-
 class google():
     def extract_metrics(garesults):
         metrics = {}
@@ -30,7 +28,10 @@ class google():
     def main(inputcsv = 'D:\\projects\\AppPicker\\reports\\best of lists performance\\ap_article.csv',
              outputcsv = 'D:\\projects\\AppPicker\\reports\\best of lists performance\\article_visits_up.csv',
              start_date_str = '2016-01-01',
-             end_date_str = '2016-01-31'):
+             end_date_str = '2016-01-31',
+             trustslugs = True):
+        """ Generate Google Analytics report for articles listed in the input CSV. If trustslugs = False, then do
+            http queries of appPicker for the real URLs instead of constructing URLs from the slugs in the input CSV """
         broker = pageanalytics.Broker()
 
         # open output file
@@ -52,14 +53,16 @@ class google():
                 for i in range(1):
                     next(reader) # skip header row
                 for row in reader:
-                    if i % 10 == 0: print('Record: {}'.format(i))
-
                     article_id = row['article_id']
                     article_type = row['article_type']
-                    slug = row['slug']
-                    article_url = articleUrls(article_type, article_id, slug)
+                    slug = row.get('slug', 'blah')
+                    if trustslugs:
+                        article_url = articleUrls(article_type, article_id, slug)
+                    else:
+                        article_url = articleUrls(article_type, article_id, 'blah').realurl()
+
                     print(str(article_url).replace('http://www.apppicker.com',''))
-                    published_at = row['published_at']
+                    published_at = row.get('published_at', 'not provided')
 
                     # get Google Analytics results for period between start and end dates
                     try:
@@ -71,7 +74,6 @@ class google():
                         garesults = broker.get_results(pagePath=str(article_url).replace('http://www.apppicker.com',''), 
                                                        start_date=start_date_str, end_date=end_date_str,
                                                        metrics='ga:sessions,ga:pageviews,ga:users,ga:newUsers,ga:bounces,ga:avgTimeOnPage,ga:sessionsPerUser,ga:avgPageLoadTime,ga:avgSessionDuration,ga:bounceRate')
-
                     metrics = google.extract_metrics(garesults)
     #                print('{}'.format(json.dumps(row)))
 
@@ -79,6 +81,7 @@ class google():
                                      metrics.get('ga:sessions'), metrics.get('ga:bounces',0), metrics.get('ga:bounceRate',0), metrics.get('ga:avgSessionDuration',0), 
                                      metrics.get('ga:pageviews',0), metrics.get('ga:avgTimeOnPage',0), metrics.get('ga:avgPageLoadTime',0), metrics.get('ga:sessionsPerUser',0)])
                     i += 1
+                    if i % 10 == 0: print('Record: {}'.format(i))
                     #if i==10:break
             inputfileh.close()
         outfileh.close()
