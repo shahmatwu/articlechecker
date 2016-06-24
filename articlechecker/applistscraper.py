@@ -71,15 +71,20 @@ def getappsfromlist(soup:BeautifulSoup):
 
     # build up list of itunes links in the article
     # check new style of applist
-    newlist = soup.findAll('div', class_='app-block-landscape-app')
+
+#    newlist = soup.findAll('div', class_='app-block-landscape-app')
+    # new applist format
+    newlist = soup.findAll('h2', class_='is-h2')
     if newlist:
         try:
-            itunes_links = [app.find('div', class_='button-application-wrapper').a['href'] for app in newlist]
+#            itunes_links = [app.find('div', class_='button-application-wrapper').a['href'] for app in newlist]
+            # new applist format
+            itunes_links = [app.find('a', class_='appblock-landscape-app-info-title is-h2')['href'] for app in newlist]
         except Exception as e:
-            raise ApplistDomError('Finding class \'button-application-wrapper\' in ' + applist_url) from e
+            raise ApplistDomError('Finding class \'appblock-landscape-app-info-title is-h2\' in ' + applist_url) from e
 
         if not itunes_links:
-            raise ApplistDomError('{} parse error. No <a href> tags found in new style \'button-application-wrapper\''.format(applist_url))
+            raise ApplistDomError('{} parse error. No <a href> tags found in new style \'appblock-landscape-app-info-title is-h2\''.format(applist_url))
     else:
         # check old style of applist
         try:
@@ -135,11 +140,13 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                 try:
                     article_url, soup = openurlforsoup(str(article_url))
                 except urllib.error.HTTPError:
+                    print("Error while trying to open article_url: {0}".format(article_url))
                     try:
                         article_url, soup = openurlforsoup(article_url) # try again
                     except urllib.error.HTTPError as e:
                         print("HTTP error opening article_id {}: {}".format(article_id, e.reason))
-                        raise
+                        writer.writerow([article_id, article_url, "Error opening article: {0}".format(e.reason),"-","-"])
+                        continue
                     except e:
                         print("General error opening article id {}: {}".format(article_id, e.reason))
                         raise

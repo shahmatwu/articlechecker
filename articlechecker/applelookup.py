@@ -64,6 +64,7 @@ def extractappfields(appjson:json):
     result['ratings'] = appjson.get('userRatingCount', 'NULL')
     result['currrating'] = appjson.get('averageUserRatingForCurrentVersion', 'NULL')
     result['currratings'] = appjson.get('userRatingCountForCurrentVersion', 'NULL')
+    result['currentVersionReleaseDate'] = appjson.get('currentVersionReleaseDate', 'NULL')
 
     return result
 
@@ -77,7 +78,7 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
         # write out headings
         # remember to match values to writer.writerow at end of this loop
         writer.writerow(['app_id', 'adam_type', 'app_name', 'desc_extract', 'article_url', 'article_id', 'published_at', 'position',
-                         'price', 'primary_genre', 'version', 'release_date', 'rating', 'ratings', 'curr_rating', 'curr_ratings'])
+                         'price', 'primary_genre', 'version', 'release_date', 'rating', 'ratings', 'curr_rating', 'curr_ratings', 'curr_ver_release_date'])
 
         # open input file
         with open(inputcsv, mode='rU', newline='\n', encoding='utf-8', errors='replace') as inputfileh:
@@ -106,7 +107,7 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                 else:
                     position_in_art = 1
                     curr_article_id = article_id
-                    print('{}'.format(article_url))
+                    print(('{}'.format(article_url)).encode('ascii', 'ignore').decode('utf-8')) # avoid errors in console if user's CSV does not contain actual URL here but string with unusual characters
 
                 # 2. values from Apples Search/Lookup API
 
@@ -120,10 +121,11 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                     desc_extract = flds['description'].replace('\n',' ').replace('\r', ' ').replace(',', ' ')[:200]
 
                     writer.writerow([app_id, flds['adamtype'], flds['title'], desc_extract,  article_url, article_id, published_at, position_in_art,
-                                     flds['price'], flds['primarygenre'], flds['version'], flds['releasedate'], flds['rating'], flds['ratings'], flds['currrating'], flds['currratings']])
+                                     flds['price'], flds['primarygenre'], flds['version'], flds['releasedate'], flds['rating'], flds['ratings'], flds['currrating'], flds['currratings'],
+                                     flds['currentVersionReleaseDate']])
                 else:
                     writer.writerow([app_id, 'Suspect ID. Did not query Apple API', 'NA', 'NA', article_url, article_id, published_at, position_in_art,
-                                     'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA'])
+                                     'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA'])
                 input_rec_no += 1
                 #if input_rec_no == 300: break
             inputfileh.close()

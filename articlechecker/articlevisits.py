@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from articleUrls import articleUrls
+from articleUrls import ArticleLoadError
 import pageanalytics
 import csv
 import json
@@ -55,14 +56,20 @@ class google():
                 for row in reader:
                     article_id = row['article_id']
                     article_type = row['article_type']
+                    published_at = row.get('published_at', 'not provided')
                     slug = row.get('slug', 'blah')
                     if trustslugs:
                         article_url = articleUrls(article_type, article_id, slug)
                     else:
-                        article_url = articleUrls(article_type, article_id, 'blah').realurl()
+                        try:
+                            article_url = articleUrls(article_type, article_id, 'blah').realurl()
+                        except ArticleLoadError as e:
+                            writer.writerow([article_id, published_at, 'Error: {0}'.format(e.customMessage), 'NULL', 'NULL', 'NULL', 'NULL', 'NULL',
+                                             'NULL', 'NULL', 'NULL', 'NULL', 'NULL'])
+                            print('Could not open URL: {0}'.format(e.customMessage))
+                            continue
 
                     print(str(article_url).replace('http://www.apppicker.com',''))
-                    published_at = row.get('published_at', 'not provided')
 
                     # get Google Analytics results for period between start and end dates
                     try:

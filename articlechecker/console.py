@@ -207,8 +207,9 @@ Get/set the folder used as the default location for your input and output files.
         
         try:
             applistscraper.main(inputcsv, hasHeaders, outputcsv)
-        except:
-            print("\n\033[93mFailed: ", sys.exc_info()[0])
+        except Exception as e:
+            #print("\n\033[93mFailed: {0} {1}".format(sys.exc_info()[0], sys.exc_info()[1]))
+            print("\n\033[93mFailed: {0}".format(e.reason))
             input("\033[0mPress ENTER to return to main menu ")
             return
 
@@ -267,8 +268,8 @@ Get/set the folder used as the default location for your input and output files.
         try:
             # finally, call the apple lookup!
             applelookup.main(inputcsv, hasHeaders, outputcsv)
-        except:
-            print("\n\033[93mFailed: ", sys.exc_info()[0])
+        except Exception as e:
+            print("\n\033[93mFailed: {0}".format(e.reason))
             input("\033[0mPress ENTER to return to main menu ")
             return
 
