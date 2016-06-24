@@ -29,3 +29,11 @@ There are two ways to use this utility:
 TIP #1: press the up- or down-arrow to scroll through old entries. This saves you from re-typing the same things over and over again.
 
 TIP #2: force quit any function at any time by pressing CTRL-C (or simply close the utility completely).
+
+TODO:
+
+Option 1, scrapelist, should continue if article_id given no longer exists.
+
+Option 1, scrapelist, does not seem to read first line if user indicates no header line.
+
+Make functions more user-friendly by indicating what is the problem with input columns instead of just giving exception message.
