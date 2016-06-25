@@ -68,6 +68,7 @@ def getappsfromlist(soup:BeautifulSoup):
     """ Parse given applist and extract the app IDs thereon
         Returns list of tuples each containing app_id and iTunes link """
     appIds = []
+    itunes_links = ''
 
     # build up list of itunes links in the article
     # check new style of applist
@@ -75,30 +76,42 @@ def getappsfromlist(soup:BeautifulSoup):
 #    newlist = soup.findAll('div', class_='app-block-landscape-app')
     # new applist format
     newlist = soup.findAll('h2', class_='is-h2')
+
+    # TODO: change the raised exceptions below to error messages that allow processing of subsequent records to go ahead
     if newlist:
         try:
 #            itunes_links = [app.find('div', class_='button-application-wrapper').a['href'] for app in newlist]
             # new applist format
             itunes_links = [app.find('a', class_='appblock-landscape-app-info-title is-h2')['href'] for app in newlist]
         except Exception as e:
-            raise ApplistDomError('Finding class \'appblock-landscape-app-info-title is-h2\' in ' + applist_url) from e
+            print(('   This page\'s HTML does not contain class \'{}\''.format('appblock-landscape-app-info-title is-h2')).encode('ascii', 'ignore').decode('utf-8'))
+            # write out err instead of raising exception raise 
+            # ApplistDomError('Finding class \'appblock-landscape-app-info-title is-h2\' in ' + applist_url) from e # TODO: applist_url not defined in this procedure
 
         if not itunes_links:
-            raise ApplistDomError('{} parse error. No <a href> tags found in new style \'appblock-landscape-app-info-title is-h2\''.format(applist_url))
+            print(('   This page\'s HTML does not contain <a href> tag inside \'{}\''.format('appblock-landscape-app-info-title is-h2')).encode('ascii', 'ignore').decode('utf-8'))
+            # write out err instead of raising exception raise 
+            # raise ApplistDomError('{} parse error. No <a href> tags found in new style \'appblock-landscape-app-info-title is-h2\''.format(applist_url))
     else:
         # check old style of applist
         try:
             oldlist = soup.find('div', class_='best-of-lists-page__description')
         except Exception as e:
-            raise ApplistDomError('Finding class \'best-of-lists-page__description\' in ' + applist_url) from e
+            print(('   Assumed old-style article page, but didn\'t find class \'{}\''.format('best-of-lists-page__description')).encode('ascii', 'ignore').decode('utf-8'))
+            # write out err instead of raising exception raise 
+            # raise ApplistDomError('Finding class \'best-of-lists-page__description\' in ' + applist_url) from e
 
         if oldlist:
             itunes_links = [app['href'] for app in oldlist.findAll('a', href=True)]
             if not itunes_links:
-                raise ApplistDomError('{} parse error. No <a href> tags found in old style \'best-of-lists-page__description\''.format(applist_url))
+                print(('   Assumed old-style article page, but didn\'t find <a href> tag \'{}\''.format('best-of-lists-page__description')).encode('ascii', 'ignore').decode('utf-8'))
+                # write out err instead of raising exception raise 
+                # raise ApplistDomError('{} parse error. No <a href> tags found in old style \'best-of-lists-page__description\''.format(applist_url))
         else:
-            raise ApplistDomError('{} parse error. Could not find new style list div with class \'app-block-landscape\'" \
-            " or old style list div with class \'best-of-lists-page__description\''.format(applist_url))
+            print(('   Could not find new-style h2 with class \'{}\' or old-style div with class \'{}\''.format('is-h2', 'best-of-lists-page__description')).encode('ascii', 'ignore').decode('utf-8'))
+            # write out err instead of raising exception raise 
+            # raise ApplistDomError('{} parse error. Could not find new style list div with class \'app-block-landscape\'" \
+            # " or old style list div with class \'best-of-lists-page__description\''.format(applist_url))
 
     for ituneslink in itunes_links:
         appIds.append((getappIDfromiTunesLink(ituneslink),ituneslink))
