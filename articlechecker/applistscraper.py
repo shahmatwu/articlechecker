@@ -146,7 +146,9 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                 slug = row['slug']
                 article_url = articleUrls(article_type, article_id, slug)
                 print(str(article_url))
-                published_at = row['published_at']
+
+                # replace the following row with value scraped from page
+                #published_at = row['published_at']
 
                 # scrape the apps on this article
                 #writer.writerow([article_id, article_url, 'APPS'])
@@ -164,6 +166,11 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                         print("General error opening article id {}: {}".format(article_id, e.reason))
                         raise
                 
+                published_at = soup.findAll('p',class_='articles-page-header-date small')[0].getText()
+                # extracts a string like '21 Jun 2016, by\xa0Cherry Mae  Torrevillas'
+                # so get only text before first comma by splitting at most once on the separator
+                published_at = published_at.split(',', 1)[0]
+
                 apps = getappsfromlist(soup)
                 for app in apps:
                     writer.writerow([article_id, article_url, published_at, app[APP_LIST_IDX_app_id], app[APP_LIST_IDX_itunes_link]])
