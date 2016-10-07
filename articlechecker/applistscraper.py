@@ -166,10 +166,16 @@ def main(inputcsv='D:\\projects\\AppPicker\\reports\\best of lists performance\\
                         print("General error opening article id {}: {}".format(article_id, e.reason))
                         raise
                 
-                published_at = soup.findAll('p',class_='articles-page-header-date small')[0].getText()
-                # extracts a string like '21 Jun 2016, by\xa0Cherry Mae  Torrevillas'
-                # so get only text before first comma by splitting at most once on the separator
-                published_at = published_at.split(',', 1)[0]
+                published_at = soup.findAll('p',class_='article-date small')
+                if not published_at:
+                    print(('   This page\'s HTML does not contain class \'{}\''.format('article-date small')).encode('ascii', 'ignore').decode('utf-8'))
+                    published_at = 'Couldn''t find date on page'
+                else:
+                    published_at = published_at[0].getText()
+
+                    # extracts a string like '21 Jun 2016, by\xa0Cherry Mae  Torrevillas'
+                    # so get only text before first comma by splitting at most once on the separator
+                    published_at = published_at.split(',', 1)[0]
 
                 apps = getappsfromlist(soup)
                 for app in apps:

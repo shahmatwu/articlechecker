@@ -14,8 +14,9 @@ import time
 import ctypes.wintypes
 
 class CheckerShell(cmd.Cmd):
-    INTRO = "\n\033[95mWelcome to the appPicker Article Checker utility.\nType help or ? to list commands.\n\nTYPE 'start' to begin.\n\033[0m"
-    PROMPT = "\033[95mChecker> \033[0m"
+#    INTRO = "\n\033[95mWelcome to the appPicker Article Checker utility.\nType help or ? to list commands.\n\nTYPE 'start' to begin.\n\033[0m"
+    INTRO = "\nWelcome to the appPicker Article Checker utility.\nType help or ? to list commands.\n\nTYPE 'start' to begin.\n"
+    PROMPT = "Checker> "
     MENU_PROMPT = ">> "
 
     def __init__(self):
@@ -76,6 +77,7 @@ class CheckerShell(cmd.Cmd):
         print("Exiting...")
 
 # ---------- MY COMMANDS ------------
+# do_ functions are called by cmd.onecmd, which takes the user input, prepends "do_" and then calls the corresponding function here
     def do_start(self, line):
         go = 1
         while go:

@@ -88,7 +88,9 @@ class google():
                                      metrics.get('ga:sessions'), metrics.get('ga:bounces',0), metrics.get('ga:bounceRate',0), metrics.get('ga:avgSessionDuration',0), 
                                      metrics.get('ga:pageviews',0), metrics.get('ga:avgTimeOnPage',0), metrics.get('ga:avgPageLoadTime',0), metrics.get('ga:sessionsPerUser',0)])
                     i += 1
-                    if i % 10 == 0: print('Record: {}'.format(i))
+                    if i % 10 == 0:
+                        print('Record: {}'.format(i))
+                        outfileh.flush()
                     #if i==10:break
             inputfileh.close()
         outfileh.close()
