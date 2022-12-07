@@ -1,5 +1,5 @@
 beautifulsoup4==4.4.1
-certifi==2015.11.20.1
+certifi==2022.12.7
 cffi==1.4.2
 cryptography==1.1.2
 google-api-python-client==1.4.2
